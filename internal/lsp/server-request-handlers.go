@@ -20,8 +20,37 @@ func RegisterFileWatchHandler(handler FileWatchHandler) {
 
 // Requests
 
-func HandleWorkspaceConfiguration(params json.RawMessage) (any, error) {
-	return []map[string]any{{}}, nil
+func HandleWorkspaceConfiguration(client *Client, params json.RawMessage) (any, error) {
+	// Parse the configuration request
+	var configParams protocol.ConfigurationParams
+	if err := json.Unmarshal(params, &configParams); err != nil {
+		lspLogger.Error("Error unmarshaling configuration params: %v", err)
+		return nil, err
+	}
+
+	// Build response based on what's requested
+	response := make([]any, len(configParams.Items))
+	for i, item := range configParams.Items {
+		// If section is specified, try to get that specific configuration
+		if item.Section != "" && client.config.Settings != nil {
+			// Look for the section in our settings
+			if sectionConfig, ok := client.config.Settings[item.Section]; ok {
+				response[i] = sectionConfig
+			} else {
+				// Return empty object if section not found
+				response[i] = map[string]any{}
+			}
+		} else {
+			// Return all settings if no section specified
+			if client.config.Settings != nil {
+				response[i] = client.config.Settings
+			} else {
+				response[i] = map[string]any{}
+			}
+		}
+	}
+
+	return response, nil
 }
 
 func HandleRegisterCapability(params json.RawMessage) (any, error) {

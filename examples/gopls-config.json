@@ -1,0 +1,45 @@
+{
+  "initializationOptions": {
+    "codelenses": {
+      "generate": true,
+      "regenerate_cgo": true,
+      "test": true,
+      "tidy": true,
+      "upgrade_dependency": true,
+      "vendor": true,
+      "vulncheck": false
+    },
+    "analyses": {
+      "unusedparams": true,
+      "nilness": true,
+      "unusedwrite": true,
+      "printf": true,
+      "structtag": true
+    },
+    "staticcheck": true,
+    "gofumpt": true,
+    "semanticTokens": true,
+    "usePlaceholders": true,
+    "completionDocumentation": true,
+    "deepCompletion": true,
+    "completeUnimported": true,
+    "matcher": "fuzzy",
+    "symbolMatcher": "fuzzy",
+    "experimentalPostfixCompletions": true
+  },
+  "settings": {
+    "gopls": {
+      "build.buildFlags": [],
+      "build.env": {},
+      "build.directoryFilters": ["-node_modules"],
+      "ui.diagnostic.analyses": {
+        "unusedparams": true,
+        "nilness": true
+      },
+      "ui.completion.usePlaceholders": true,
+      "ui.navigation.importShortcut": "Both",
+      "ui.diagnostic.staticcheck": true,
+      "formatting.gofumpt": true
+    }
+  }
+}

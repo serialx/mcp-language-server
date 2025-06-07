@@ -1,0 +1,40 @@
+{
+  "initializationOptions": {},
+  "settings": {
+    "python": {
+      "analysis": {
+        "autoSearchPaths": true,
+        "useLibraryCodeForTypes": true,
+        "diagnosticMode": "workspace",
+        "typeCheckingMode": "standard",
+        "autoImportCompletions": true,
+        "completeFunctionParens": false,
+        "extraPaths": [],
+        "stubPath": "",
+        "typeshedPaths": [],
+        "logLevel": "Information",
+        "reportGeneralTypeIssues": "error",
+        "reportMissingImports": "error",
+        "reportMissingTypeStubs": "none",
+        "reportPrivateUsage": "none",
+        "reportUnusedImport": "warning",
+        "reportUnusedClass": "warning",
+        "reportUnusedFunction": "warning",
+        "reportUnusedVariable": "warning",
+        "reportDuplicateImport": "warning",
+        "reportOptionalMemberAccess": "none",
+        "reportOptionalCall": "none",
+        "reportOptionalIterable": "none",
+        "reportOptionalContextManager": "none",
+        "reportOptionalOperand": "none"
+      },
+      "linting": {
+        "enabled": true,
+        "pylintEnabled": false,
+        "flake8Enabled": false,
+        "mypyEnabled": false,
+        "banditEnabled": false
+      }
+    }
+  }
+}

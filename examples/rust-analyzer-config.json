@@ -1,0 +1,48 @@
+{
+  "initializationOptions": {
+    "cargo": {
+      "features": "all",
+      "buildScripts": {
+        "enable": true
+      }
+    },
+    "checkOnSave": {
+      "command": "clippy",
+      "extraArgs": ["--", "-W", "clippy::all"]
+    },
+    "procMacro": {
+      "enable": true
+    },
+    "inlayHints": {
+      "typeHints": {
+        "enable": true
+      },
+      "parameterHints": {
+        "enable": true
+      },
+      "chainingHints": {
+        "enable": true
+      }
+    },
+    "diagnostics": {
+      "enable": true,
+      "experimental": {
+        "enable": false
+      }
+    },
+    "assist": {
+      "importMergeBehaviour": "last",
+      "importPrefix": "plain"
+    }
+  },
+  "settings": {
+    "rust-analyzer": {
+      "cargo.features": "all",
+      "checkOnSave.command": "clippy",
+      "diagnostics.enable": true,
+      "inlayHints.enable": true,
+      "lens.enable": true,
+      "procMacro.enable": true
+    }
+  }
+}

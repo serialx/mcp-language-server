@@ -44,9 +44,12 @@ type Client struct {
 	// Files are currently opened by the LSP
 	openFiles   map[string]*OpenFileInfo
 	openFilesMu sync.RWMutex
+
+	// Server configuration
+	config *ServerConfig
 }
 
-func NewClient(command string, args ...string) (*Client, error) {
+func NewClient(command string, config *ServerConfig, args ...string) (*Client, error) {
 	cmd := exec.Command(command, args...)
 	// Copy env
 	cmd.Env = os.Environ()
@@ -76,6 +79,7 @@ func NewClient(command string, args ...string) (*Client, error) {
 		serverRequestHandlers: make(map[string]ServerRequestHandler),
 		diagnostics:           make(map[protocol.DocumentUri][]protocol.Diagnostic),
 		openFiles:             make(map[string]*OpenFileInfo),
+		config:                config,
 	}
 
 	// Start the LSP server process
@@ -177,17 +181,7 @@ func (c *Client) InitializeLSPClient(ctx context.Context, workspaceDir string) (
 				},
 				Window: protocol.WindowClientCapabilities{},
 			},
-			InitializationOptions: map[string]any{
-				"codelenses": map[string]bool{
-					"generate":           true,
-					"regenerate_cgo":     true,
-					"test":               true,
-					"tidy":               true,
-					"upgrade_dependency": true,
-					"vendor":             true,
-					"vulncheck":          false,
-				},
-			},
+			InitializationOptions: c.config.InitializationOptions,
 		},
 	}
 
@@ -202,7 +196,9 @@ func (c *Client) InitializeLSPClient(ctx context.Context, workspaceDir string) (
 
 	// Register handlers
 	c.RegisterServerRequestHandler("workspace/applyEdit", HandleApplyEdit)
-	c.RegisterServerRequestHandler("workspace/configuration", HandleWorkspaceConfiguration)
+	c.RegisterServerRequestHandler("workspace/configuration", func(params json.RawMessage) (any, error) {
+		return HandleWorkspaceConfiguration(c, params)
+	})
 	c.RegisterServerRequestHandler("client/registerCapability", HandleRegisterCapability)
 	c.RegisterNotificationHandler("window/showMessage", HandleServerMessage)
 	c.RegisterNotificationHandler("textDocument/publishDiagnostics",

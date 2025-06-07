@@ -1,0 +1,30 @@
+{
+  "initializationOptions": {
+    "clangdFileStatus": true,
+    "fallbackFlags": [
+      "-std=c++17",
+      "-Wall",
+      "-Wextra"
+    ],
+    "compilationDatabasePath": "build"
+  },
+  "settings": {
+    "clangd": {
+      "arguments": [
+        "--background-index",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--header-insertion=iwyu",
+        "--suggest-missing-includes",
+        "--cross-file-rename",
+        "--all-scopes-completion",
+        "--log=info"
+      ],
+      "checkUpdates": false,
+      "restartAfterCrash": true,
+      "semanticHighlighting": true,
+      "serverCompletionRanking": true,
+      "detectExtensionConflicts": true
+    }
+  }
+}

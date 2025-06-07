@@ -24,10 +24,12 @@ type config struct {
 	workspaceDir string
 	lspCommand   string
 	lspArgs      []string
+	configFile   string
 }
 
 type mcpServer struct {
 	config           config
+	lspConfig        *lsp.ServerConfig
 	lspClient        *lsp.Client
 	mcpServer        *server.MCPServer
 	ctx              context.Context
@@ -39,6 +41,7 @@ func parseConfig() (*config, error) {
 	cfg := &config{}
 	flag.StringVar(&cfg.workspaceDir, "workspace", "", "Path to workspace directory")
 	flag.StringVar(&cfg.lspCommand, "lsp", "", "LSP command to run (args should be passed after --)")
+	flag.StringVar(&cfg.configFile, "config", "", "Path to language server configuration file (JSON)")
 	flag.Parse()
 
 	// Get remaining args after -- as LSP arguments
@@ -73,8 +76,22 @@ func parseConfig() (*config, error) {
 
 func newServer(config *config) (*mcpServer, error) {
 	ctx, cancel := context.WithCancel(context.Background())
+
+	// Load language server configuration
+	lspConfig, err := lsp.LoadServerConfig(config.configFile)
+	if err != nil {
+		cancel()
+		return nil, fmt.Errorf("failed to load LSP config: %v", err)
+	}
+
+	// If no config provided, use defaults based on LSP command
+	if lspConfig.InitializationOptions == nil && config.configFile == "" {
+		lspConfig = lsp.GetDefaultConfig(config.lspCommand)
+	}
+
 	return &mcpServer{
 		config:     *config,
+		lspConfig:  lspConfig,
 		ctx:        ctx,
 		cancelFunc: cancel,
 	}, nil
@@ -85,7 +102,7 @@ func (s *mcpServer) initializeLSP() error {
 		return fmt.Errorf("failed to change to workspace directory: %v", err)
 	}
 
-	client, err := lsp.NewClient(s.config.lspCommand, s.config.lspArgs...)
+	client, err := lsp.NewClient(s.config.lspCommand, s.lspConfig, s.config.lspArgs...)
 	if err != nil {
 		return fmt.Errorf("failed to create LSP client: %v", err)
 	}

@@ -1,0 +1,80 @@
+{
+  "initializationOptions": {
+    "preferences": {
+      "includeCompletionsForModuleExports": true,
+      "includeCompletionsForImportStatements": true,
+      "includeCompletionsWithSnippetText": true,
+      "includeAutomaticOptionalChainCompletions": true,
+      "includeCompletionsWithInsertText": true,
+      "allowIncompleteCompletions": true,
+      "providePrefixAndSuffixTextForRename": true,
+      "provideRefactorNotApplicableReason": true,
+      "allowRenameOfImportPath": true,
+      "includePackageJsonAutoImports": "auto",
+      "quotePreference": "auto",
+      "importModuleSpecifierPreference": "shortest",
+      "importModuleSpecifierEnding": "auto"
+    },
+    "tsserver": {
+      "logDirectory": null,
+      "logVerbosity": "off",
+      "trace": "off"
+    }
+  },
+  "settings": {
+    "typescript": {
+      "suggest": {
+        "autoImports": true,
+        "completeFunctionCalls": false,
+        "includeCompletionsForImportStatements": true,
+        "includeAutomaticOptionalChainCompletions": true
+      },
+      "preferences": {
+        "quoteStyle": "auto",
+        "importModuleSpecifier": "shortest",
+        "includePackageJsonAutoImports": "auto"
+      },
+      "format": {
+        "enable": true,
+        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true
+      },
+      "inlayHints": {
+        "includeInlayParameterNameHints": "all",
+        "includeInlayParameterNameHintsWhenArgumentMatchesName": false,
+        "includeInlayFunctionParameterTypeHints": true,
+        "includeInlayVariableTypeHints": true,
+        "includeInlayPropertyDeclarationTypeHints": true,
+        "includeInlayFunctionLikeReturnTypeHints": true,
+        "includeInlayEnumMemberValueHints": true
+      }
+    },
+    "javascript": {
+      "suggest": {
+        "autoImports": true,
+        "completeFunctionCalls": false,
+        "includeCompletionsForImportStatements": true,
+        "includeAutomaticOptionalChainCompletions": true
+      },
+      "preferences": {
+        "quoteStyle": "auto",
+        "importModuleSpecifier": "shortest",
+        "includePackageJsonAutoImports": "auto"
+      },
+      "format": {
+        "enable": true,
+        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBrackets": false,
+        "insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true
+      },
+      "inlayHints": {
+        "includeInlayParameterNameHints": "all",
+        "includeInlayParameterNameHintsWhenArgumentMatchesName": false,
+        "includeInlayFunctionParameterTypeHints": true,
+        "includeInlayVariableTypeHints": true,
+        "includeInlayPropertyDeclarationTypeHints": true,
+        "includeInlayFunctionLikeReturnTypeHints": true,
+        "includeInlayEnumMemberValueHints": true
+      }
+    }
+  }
+}

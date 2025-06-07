@@ -167,6 +167,78 @@ This is an [MCP](https://modelcontextprotocol.io/introduction) server that runs 
   </div>
 </details>
 
+## Configuration
+
+The MCP Language Server supports custom configuration for language servers through JSON configuration files. This allows you to customize initialization options and workspace settings for your specific language server.
+
+### Using Configuration Files
+
+You can provide a configuration file using the `--config` flag:
+
+```bash
+mcp-language-server --workspace /path/to/project --lsp pyright --config /path/to/config.json
+```
+
+### Configuration File Format
+
+Configuration files should be JSON with the following structure:
+
+```json
+{
+  "initializationOptions": {
+    // Options passed during language server initialization
+  },
+  "settings": {
+    // Settings returned when the language server requests workspace/configuration
+  }
+}
+```
+
+### Example Configurations
+
+Example configuration files for popular language servers are available in the `examples/` directory:
+
+- **Python (Pyright)**: `examples/pyright-config.json` - Configure type checking mode, analysis settings, and linting options
+- **Go (gopls)**: `examples/gopls-config.json` - Enable code lenses, static analysis, and completion features
+- **Rust (rust-analyzer)**: `examples/rust-analyzer-config.json` - Set up Clippy integration, inlay hints, and cargo features
+- **TypeScript**: `examples/typescript-language-server-config.json` - Configure auto-imports, formatting, and inlay hints
+- **C/C++ (clangd)**: `examples/clangd-config.json` - Set compilation flags, enable clang-tidy, and configure indexing
+
+### Example: Configuring Pyright
+
+To use Pyright with custom settings:
+
+1. Create a configuration file (or use the example):
+```json
+{
+  "settings": {
+    "python": {
+      "analysis": {
+        "typeCheckingMode": "strict",
+        "autoImportCompletions": true,
+        "diagnosticMode": "workspace"
+      }
+    }
+  }
+}
+```
+
+2. Configure your MCP client to use the config:
+```json
+{
+  "mcpServers": {
+    "language-server": {
+      "command": "mcp-language-server",
+      "args": [
+        "--workspace", "/path/to/project",
+        "--lsp", "pyright",
+        "--config", "/path/to/pyright-config.json"
+      ]
+    }
+  }
+}
+```
+
 ## Tools
 
 - `definition`: Retrieves the complete source code definition of any symbol (function, type, constant, etc.) from your codebase.
