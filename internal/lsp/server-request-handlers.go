@@ -27,6 +27,8 @@ func HandleWorkspaceConfiguration(client *Client, params json.RawMessage) (any, 
 		lspLogger.Error("Error unmarshaling configuration params: %v", err)
 		return nil, err
 	}
+	
+	lspLogger.Info("Workspace configuration requested: %+v", configParams)
 
 	// Build response based on what's requested
 	response := make([]any, len(configParams.Items))
@@ -50,6 +52,7 @@ func HandleWorkspaceConfiguration(client *Client, params json.RawMessage) (any, 
 		}
 	}
 
+	lspLogger.Info("Returning configuration: %+v", response)
 	return response, nil
 }
 
