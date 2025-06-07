@@ -196,6 +196,13 @@ func (c *Client) Call(ctx context.Context, method string, params any, result any
 	id := c.nextID.Add(1)
 
 	lspLogger.Debug("Making call: method=%s id=%v", method, id)
+	
+	// Log initialization parameters for debugging
+	if method == "initialize" {
+		if paramsJson, err := json.MarshalIndent(params, "", "  "); err == nil {
+			lspLogger.Info("Initialize params: %s", string(paramsJson))
+		}
+	}
 
 	msg, err := NewRequest(id, method, params)
 	if err != nil {

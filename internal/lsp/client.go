@@ -50,6 +50,9 @@ type Client struct {
 }
 
 func NewClient(command string, config *ServerConfig, args ...string) (*Client, error) {
+	if config == nil {
+		config = &ServerConfig{}
+	}
 	cmd := exec.Command(command, args...)
 	// Copy env
 	cmd.Env = os.Environ()
@@ -118,6 +121,10 @@ func (c *Client) RegisterServerRequestHandler(method string, handler ServerReque
 }
 
 func (c *Client) InitializeLSPClient(ctx context.Context, workspaceDir string) (*protocol.InitializeResult, error) {
+	lspLogger.Info("Initializing LSP client with config: %+v", c.config)
+	if c.config != nil && c.config.InitializationOptions != nil {
+		lspLogger.Info("InitializationOptions: %+v", c.config.InitializationOptions)
+	}
 	initParams := &protocol.InitializeParams{
 		WorkspaceFoldersInitializeParams: protocol.WorkspaceFoldersInitializeParams{
 			WorkspaceFolders: []protocol.WorkspaceFolder{

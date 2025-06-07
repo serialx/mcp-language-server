@@ -83,8 +83,10 @@ func newServer(config *config) (*mcpServer, error) {
 		cancel()
 		return nil, fmt.Errorf("failed to load LSP config: %v", err)
 	}
+	
+	coreLogger.Debug("Loaded config from file %s: %+v", config.configFile, lspConfig)
 
-	// If no config provided, use defaults based on LSP command
+	// If no initialization options provided and no config file specified, use defaults
 	if lspConfig.InitializationOptions == nil && config.configFile == "" {
 		lspConfig = lsp.GetDefaultConfig(config.lspCommand)
 	}
